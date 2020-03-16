@@ -1,2 +1,0 @@
-GET /users
-GET /static/users/script.js
