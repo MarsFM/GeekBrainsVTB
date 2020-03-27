@@ -1,22 +1,22 @@
 import React, { Component } from 'react';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
+import { push } from 'connected-react-router';
 import ClassNames from "classnames";
 
 import {ListItem, ListItemIcon, ListItemText} from "@material-ui/core";
 import FaceIcon from '@material-ui/icons/Face';
 import DeleteTwoToneIcon from '@material-ui/icons/DeleteTwoTone'
 
-
 import {setCurrentChat, deleteChat} from "../../actions/chatActions.js";
 
 import './ChatItem.css';
 
-
 class ChatItem extends Component {
 
-  handleSelectChat = () => () => {
+  handleSelectChat = (link) => () => {
     const {chatId} = this.props;
     this.props.setCurrentChat({chatId});
+    this.props.push(link);
   };
 
   handleDeleteChat = () => (e) => {
@@ -34,7 +34,7 @@ class ChatItem extends Component {
       });
 
     return (
-        <div className={classes} onClick={this.handleSelectChat()}>
+        <div className={classes} onClick={this.handleSelectChat(`/chats/${chatId}`)}>
           <ListItem button>
             <ListItemIcon>
               <FaceIcon />
@@ -52,12 +52,13 @@ const mapStateToProps = (state) => {
     current_chat_id: state.chats.current_chat_id,
     chats: state.chats.entries
   }
-}
+};
 
 const mapDispatchToProps = (dispatch) => {
   return {
     setCurrentChat: (id) => dispatch(setCurrentChat(id)),
-    deleteChat: (id) => dispatch(deleteChat(id))
+    deleteChat: (id) => dispatch(deleteChat(id)),
+    push: (link) => dispatch(push(link))
   };
 };
 

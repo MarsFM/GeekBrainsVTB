@@ -21,14 +21,10 @@ class MessengerContainer extends Component {
   };
 
   handleSendMessage = (message, author) => () => {
-    const {chatId, sendMessage, isClick} = this.props;
+    const {chatId, sendMessage} = this.props;
 
     if (message === '' || author === '') {
       return
-    }
-
-    if (!isClick) {
-      return;
     }
 
     sendMessage({chatId, author, message, isClick: false});
@@ -53,16 +49,10 @@ class MessengerContainer extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    isClick: state.chats.isClick
-  }
-};
-
 const mapDispatchToProps = (dispatch) => {
   return {
     sendMessage: (payload) => dispatch(sendMessage(payload)),
   }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(MessengerContainer);
+export default connect(null, mapDispatchToProps)(MessengerContainer);

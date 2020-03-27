@@ -10,5 +10,9 @@
 }
 
 .chat-item__show {
-    background: #dc40b1;
+    animation: fire_chat 700ms 3 forwards ease-out;
+}
+
+@keyframes fire_chat {
+    100% {background-color: #dc40b1;}
 }

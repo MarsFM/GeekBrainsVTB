@@ -1,12 +1,40 @@
 import {createStore, applyMiddleware} from 'redux';
 import { createLogger } from 'redux-logger'
+import { createBrowserHistory } from "history";
+import { routerMiddleware } from 'connected-react-router';
+import {persistStore, persistReducer} from 'redux-persist';
+import storage  from "redux-persist/lib/storage";
 
-import combineReducer from './reducers';
+import initReducer from './reducers';
 import {robotMiddleware} from "./middlewares/robot.js";
-import {signal} from "./middlewares/signal.js";
+import {chatActiveMiddleware} from "./middlewares/chatActive.js";
+
+export const history = createBrowserHistory();
 
 const logger = createLogger();
 
-const store = createStore(combineReducer, applyMiddleware(robotMiddleware, signal, logger));
+const persistConfig = {
+  key: 'root',
+  storage,
+};
 
-export default store;
+export const initStore = () => {
+  const initialStore = {};
+
+  const store = createStore(
+    persistReducer(persistConfig, initReducer(history)),
+    initialStore,
+    applyMiddleware(
+      routerMiddleware(history),
+      robotMiddleware,
+      chatActiveMiddleware,
+      logger
+    )
+  );
+
+  const persistor = persistStore(store);
+  return {
+    store,
+    persistor
+  };
+};

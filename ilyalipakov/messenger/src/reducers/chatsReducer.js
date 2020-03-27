@@ -44,13 +44,15 @@ const initialState = {
 export const chatsReducer = (state = initialState, action) => {
   switch (action.type) {
     case LOAD_CHATS:
+      console.log(state.entries);
+      const entryData = Array.isArray(state.entries) ? dataBackend : state.entries;
       return {
         ...state,
-        entries: dataBackend,
+        entries: entryData,
         loading: false
       };
     case SEND_MESSAGE: {
-      const {chatId, author, message, isClick} = action.payload;
+      const {chatId, author, message} = action.payload;
       return {
         ...state,
         entries: {
@@ -60,7 +62,6 @@ export const chatsReducer = (state = initialState, action) => {
             messages: [...state.entries[chatId].messages, {author, message}]
           }
         },
-        isClick
       };
     }
     case ADD_CHAT: {
@@ -96,14 +97,14 @@ export const chatsReducer = (state = initialState, action) => {
       };
     }
     case TWINKLE_CHAT: {
-      const id = action.payload;
+      const { id, flag } = action.payload;
       return {
         ...state,
         entries: {
           ...state.entries,
           [id]: {
             ...state.entries[id],
-            twinkle: !state.entries[id].twinkle
+            twinkle: flag
           }
         }
       }

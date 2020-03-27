@@ -39,9 +39,9 @@ export const deleteChat = (id) => {
   }
 };
 
-export const twinkleChat = (id) => {
+export const twinkleChat = (id, flag) => {
   return {
     type: TWINKLE_CHAT,
-    payload: id
+    payload: { id, flag }
   }
 };

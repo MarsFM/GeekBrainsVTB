@@ -1,13 +1,11 @@
 import React, {Component} from "react";
-import {connect} from 'react-redux';
-import {Link} from 'react-router-dom';
+
+import ChatItem from "../ChatItem";
+import ChatForm from "../Chat-form";
 
 import {List} from "@material-ui/core";
-import ChatItem from "../ChatItem";
-import {loadChats} from "../../actions/chatActions";
 
 import './ChatList.css';
-import ChatForm from "../Chat-form";
 
 class ChatList extends Component {
 
@@ -15,9 +13,10 @@ class ChatList extends Component {
         const {chats} = this.props;
         const chatsUI = chats.map(({id, title}) => {
             return (
-              <Link key={id} to={`/chats/${id}`}>
-                  <ChatItem chatId={id} key={id} name={title} />
-              </Link>
+                  <ChatItem
+                    chatId={id}
+                    key={id}
+                    name={title} />
             )
         });
 
@@ -31,6 +30,5 @@ class ChatList extends Component {
         );
     }
 }
-
 
 export default ChatList;
