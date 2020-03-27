@@ -9,7 +9,10 @@ export const chatActiveMiddleware = store => next => action => {
   } else if (action.type === '@@router/LOCATION_CHANGE') {
     const chatId = action.payload.location.pathname.split('/')[2];
     if (typeof chatId !== "undefined") {
-      store.dispatch(twinkleChat(chatId, false))
+      const chat = store.getState().entries;
+      if (chat) {
+        store.dispatch(twinkleChat(chatId, false))
+      }
     }
   }
 

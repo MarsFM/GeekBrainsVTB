@@ -8,7 +8,7 @@ import {ListItem, ListItemIcon, ListItemText} from "@material-ui/core";
 import FaceIcon from '@material-ui/icons/Face';
 import DeleteTwoToneIcon from '@material-ui/icons/DeleteTwoTone'
 
-import {setCurrentChat, deleteChat} from "../../actions/chatActions.js";
+import {setCurrentChat, deleteChat, twinkleChat} from "../../actions/chatActions.js";
 
 import './ChatItem.css';
 
@@ -17,12 +17,14 @@ class ChatItem extends Component {
   handleSelectChat = (link) => () => {
     const {chatId} = this.props;
     this.props.setCurrentChat({chatId});
+    this.props.twinkleChat(chatId, false);
     this.props.push(link);
   };
 
   handleDeleteChat = () => (e) => {
     const id = e.currentTarget.id;
     this.props.deleteChat(id);
+    this.props.push("/");
   };
 
   render() {
@@ -59,7 +61,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     setCurrentChat: (id) => dispatch(setCurrentChat(id)),
     deleteChat: (id) => dispatch(deleteChat(id)),
-    push: (link) => dispatch(push(link))
+    push: (link) => dispatch(push(link)),
+    twinkleChat: (id, flag) => dispatch(twinkleChat(id, flag))
   };
 };
 
