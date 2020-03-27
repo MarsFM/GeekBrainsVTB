@@ -9,7 +9,7 @@ export const routes = [
     component: AppContainer
   },
   {
-    path: '/profiles/:id([\\d]+)',
+    path: '/profile',
     exact: true,
     component: ProfileContainer
   },

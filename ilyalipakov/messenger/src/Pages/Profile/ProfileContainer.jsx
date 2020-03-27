@@ -9,32 +9,25 @@ import Profile from "./Profile.jsx";
 class ProfileContainer extends Component {
 
   componentDidMount() {
-    setTimeout(() => {
-      this.props.loadProfiles()
-    }, 1000);
+    this.props.loadProfiles();
   }
 
   render() {
-    const {loading} = this.props;
-    return loading ? <Spinner /> : <Profile {...this.props}/>
+    const { loading } = this.props;
+    return loading ? <Spinner /> : <Profile {...this.props.data}/>
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
-  const profiles = state.profiles.entries;
-  const loading = state.profiles.loading;
-  const { id } = ownProps.match.params;
-  const profile = profiles[id];
-
+const mapStateToProps = (state) => {
   return {
-    ...profile,
-    loading,
+    data: state.profiles.entries,
+    loading: state.profiles.loading,
   }
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    loadProfiles: () => dispatch(loadProfiles())
+    loadProfiles: () => dispatch(loadProfiles()),
   }
 };
 

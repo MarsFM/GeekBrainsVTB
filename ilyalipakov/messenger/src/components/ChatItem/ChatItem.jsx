@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 import ClassNames from "classnames";
-import {Redirect} from 'react-router-dom';
 
 import {ListItem, ListItemIcon, ListItemText} from "@material-ui/core";
 import FaceIcon from '@material-ui/icons/Face';
